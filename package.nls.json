@@ -1,4 +1,12 @@
 {
-    "command.title": "MkTree: Create structure from selection",
-    "codelens.title": "🌳 MkTree: Create this structure"
+    "mktree.createTitle": "MkTree: Create Structure",
+    "mktree.success": "Structure created successfully!",
+    "mktree.error": "Error creating structure: {0}",
+    "mktree.invalid": "MkTree: Validation errors found",
+    "mktree.creating": "MkTree: Creating files...",
+    "mktree.noWorkspace": "Please open a workspace folder first.",
+    "mktree.lensTitle": "🌳 Create this structure",
+    "mktree.duplicatePath": "Line {0}: Duplicate path -> \"{1}\"",
+    "mktree.createdPaths": "Created paths:",
+    "mktree.nothingCreated": "No files or folders were created."
 }

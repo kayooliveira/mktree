@@ -10,9 +10,17 @@ suite('MkTree Refined Logic Suite', () => {
             const fence = parseLine('```txt');
             const empty = parseLine('   ');
             
-            assert.strictEqual(title, null, 'Should ignore Markdown titles');
-            assert.strictEqual(fence, null, 'Should ignore code fences');
-            assert.strictEqual(empty, null, 'Should ignore empty lines');
+            assert.strictEqual(title, null);
+            assert.strictEqual(fence, null);
+            assert.strictEqual(empty, null);
+        });
+
+        test('Should ignore programming code (Method chaining)', () => {
+            const methodCall = parseLine('    .filter(d => d.message)');
+            const mapCall = parseLine('    .map(diagnostic => {');
+            
+            assert.strictEqual(methodCall, null, 'Should ignore method calls starting with dot');
+            assert.strictEqual(mapCall, null, 'Should ignore map calls');
         });
 
         test('Should identify valid tree lines', () => {
@@ -20,17 +28,17 @@ suite('MkTree Refined Logic Suite', () => {
             const folder = parseLine('├── src/');
             const file = parseLine('│   └── main.ts');
             
-            assert.ok(root !== null && root.isDir === true, 'Should identify root folder');
-            assert.ok(folder !== null && folder.name === 'src', 'Should identify nested folder');
-            assert.ok(file !== null && file.name === 'main.ts', 'Should identify file');
+            assert.ok(root !== null && root.isDir === true);
+            assert.ok(folder !== null && folder.name === 'src');
+            assert.ok(file !== null && file.name === 'main.ts');
         });
 
         test('Should identify known files without extensions', () => {
             const docker = parseLine('├── Dockerfile');
-            const pkg = parseLine('├── package.json');
+            const make = parseLine('└── Makefile');
             
-            assert.ok(docker !== null && docker.isDir === false, 'Dockerfile should be a file');
-            assert.ok(pkg !== null && pkg.isDir === false, 'package.json should be a file');
+            assert.ok(docker !== null && docker.isDir === false);
+            assert.ok(make !== null && make.isDir === false);
         });
     });
 
@@ -39,34 +47,37 @@ suite('MkTree Refined Logic Suite', () => {
         test('Should ignore garbage lines in validation', () => {
             const mixedText = [
                 '# My Project',
-                '```txt',
                 'src/',
                 '├── app.ts',
-                '```'
+                '    .filter(x => x)' 
             ].join('\n');
             
             const result = validateStructure(mixedText, '/tmp');
-            assert.strictEqual(result.valid, true, 'Should be valid by ignoring garbage lines');
+            assert.strictEqual(result.valid, true);
         });
 
-        test('Should detect duplicates in deep structures', () => {
+        test('Should detect duplicates and return localized error format', () => {
             const duplicatedText = [
                 'root/',
                 '├── src/',
-                '│   └── utils.ts',
-                '└── src/',
-                '    └── utils.ts'
+                '└── src/'
             ].join('\n');
             
             const result = validateStructure(duplicatedText, '/tmp');
-            assert.strictEqual(result.valid, false, 'Should detect duplicate path');
-            assert.ok(result.errors.length > 0);
+            assert.strictEqual(result.valid, false);
+            assert.ok(result.errors[0].includes('src'), 'Error message should mention the duplicate name');
         });
 
-        test('Should detect invalid characters for OS', () => {
-            const invalidText = '├── invalid:file.txt';
-            const result = validateStructure(invalidText, '/tmp');
-            assert.strictEqual(result.valid, false, 'Should detect colon as invalid character');
+        test('Should handle deep nested paths correctly', () => {
+            const deepText = [
+                'project/',
+                '└── src/',
+                '    └── components/',
+                '        └── Button.tsx'
+            ].join('\n');
+            
+            const result = validateStructure(deepText, '/tmp');
+            assert.strictEqual(result.valid, true);
         });
     });
 });

@@ -2,7 +2,7 @@
   "name": "mktree",
   "displayName": "MkTree",
   "description": "Instantly create complex file and folder structures from text-based tree diagrams.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "icon": "logo.png",
   "publisher": "kayooliveiradev",
   "repository": {
@@ -33,7 +33,7 @@
     "commands": [
       {
         "command": "mktree.createStructure",
-        "title": "%command.title%",
+        "title": "%mktree.createTitle%",
         "category": "MkTree"
       }
     ],
@@ -59,7 +59,8 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "package-vsce": "npm run compile && vsce package"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -72,5 +73,8 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1"
+  },
+  "dependencies": {
+    "vscode-nls": "^5.2.0"
   }
 }
