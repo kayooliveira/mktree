@@ -60,7 +60,11 @@ MkTree includes a "Dry Run" logic. If your structure has errors, it will block t
 
 ## ⚙️ Installation
 
-1. Open Cursor or VS Code.
+### For Cursor
+Install from [Open VSX](https://open-vsx.org/extension/kayooliveiradev/mktree)
+
+### For VS Code
+1. Open VS Code.
 2. Go to Extensions (Ctrl+Shift+X).
 3. Click the "..." (top right) > Install from VSIX....
 4. Select your mktree-x.x.x.vsix file.

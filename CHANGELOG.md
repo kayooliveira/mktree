@@ -4,9 +4,9 @@ All notable changes to the "mktree" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [1.0.0] - 2025-09-26
+## [1.1.1] - 2025-12-29
 
-- Initial release
+- Updated README with Open VSX installation link for Cursor
 
 ## [1.1.0] - 2025-12-26
 
@@ -16,3 +16,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Extension works with unsaved (untitled) files using workspace root
 - All messages use localization, no hardcoded strings
 - Source code cleaned up (no comments)
+
+## [1.0.0] - 2025-09-26
+
+- Initial release
